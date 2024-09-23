@@ -58,5 +58,50 @@ namespace abc_bank_tests
             oscar.OpenAccount(new Account(Account.MAXI_SAVINGS));
             Assert.AreEqual(3, oscar.GetNumberOfAccounts());
         }
+
+        [TestMethod]
+        public void valid_account_transfer_savings_to_checking(){
+            Account checkingAccount = new Account(Account.CHECKING);
+            Account savingsAccount = new Account(Account.SAVINGS);
+
+            Customer henry = new Customer("Henry")
+                .OpenAccount(checkingAccount)
+                .OpenAccount(savingsAccount);
+            savingsAccount.Deposit(100.0);
+
+            henry.Transfer(savingsAccount, checkingAccount, 50);
+
+            Assert.AreEqual(50, checkingAccount.sumTransactions());
+            Assert.AreEqual(50, savingsAccount.sumTransactions());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "amount must be less then the account balance")]
+        public void invalid_account_transfer_amount_exceeds_balance(){
+            Account checkingAccount = new Account(Account.CHECKING);
+            Account savingsAccount = new Account(Account.SAVINGS);
+
+            Customer henry = new Customer("Henry")
+                .OpenAccount(checkingAccount)
+                .OpenAccount(savingsAccount);
+            savingsAccount.Deposit(10.0);
+
+            henry.Transfer(savingsAccount, checkingAccount, 50);
+
+        }
+
+         [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "amount must be greater than 0")]
+        public void invalid_account_transfer_amount_0(){
+            Account checkingAccount = new Account(Account.CHECKING);
+            Account savingsAccount = new Account(Account.SAVINGS);
+
+            Customer henry = new Customer("Henry")
+                .OpenAccount(checkingAccount)
+                .OpenAccount(savingsAccount);
+
+            henry.Transfer(savingsAccount, checkingAccount, 0);
+
+        } 
     }
 }

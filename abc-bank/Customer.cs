@@ -86,5 +86,18 @@ namespace abc_bank
         {
             return Math.Abs(d).ToString("C2");
         }
+
+        public void Transfer(Account FromAccount, Account ToAccount, double amount){
+            if (amount <= 0) {
+                throw new ArgumentException("amount must be greater than zero");
+            }
+
+            if (FromAccount.sumTransactions() < amount) {
+                throw new ArgumentException("amount must be less then the account balance");
+            }
+
+            FromAccount.Withdraw(amount);
+            ToAccount.Deposit(amount);
+        }
     }
 }
