@@ -33,27 +33,21 @@ namespace abc_bank_tests
         }
 
         [TestMethod]
-        public void maxi_savings_account_has_interestEarned_1_pct_for_first_1000() {
+        public void maxi_savings_account_has_interestEarned_5_pct_if_withdraws_10_days() {
             var account = new Account(Account.MAXI_SAVINGS);
             account.Deposit(1000);
             var result = account.InterestEarned();
-            Assert.AreEqual(20, result, DOUBLE_DELTA);
+            Assert.AreEqual(5, result, DOUBLE_DELTA);
         }
 
         [TestMethod]
-        public void maxi_savings_account_has_interestEarned_5_pct_next_1000() {
+        public void maxi_savings_account_has_interestEarned_1_if_withdraws_10_days() {
             var account = new Account(Account.MAXI_SAVINGS);
             account.Deposit(2000);
+            account.Withdraw(1000);
             var result = account.InterestEarned();
-            Assert.AreEqual(70, result, DOUBLE_DELTA);
+            Assert.AreEqual(1, result, DOUBLE_DELTA);
         }
 
-        [TestMethod]
-        public void maxi_savings_account_has_interestEarned_10_pct_after_2000() {
-            var account = new Account(Account.MAXI_SAVINGS);
-            account.Deposit(3000);
-            var result = account.InterestEarned();
-            Assert.AreEqual(170, result, DOUBLE_DELTA);
-        }
     }
 }
