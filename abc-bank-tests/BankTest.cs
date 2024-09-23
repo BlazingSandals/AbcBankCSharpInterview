@@ -22,6 +22,27 @@ namespace abc_bank_tests
         }
 
         [TestMethod]
+        public void CustomerAccountInterestSummary(){
+            Bank bank = new Bank();
+            
+            // Add customer 1, account and deposit
+            Account checkingAccount1 = new Account(Account.CHECKING);
+            Customer bill = new Customer("Bill").OpenAccount(checkingAccount1);
+            bank.AddCustomer(bill);
+            checkingAccount1.Deposit(100.0);
+
+            // Add customer 2, account and deposit
+            Account checkingAccount2 = new Account(Account.SAVINGS);
+            Customer ned = new Customer("Ned").OpenAccount(checkingAccount2);
+            bank.AddCustomer(ned);
+            checkingAccount2.Deposit(100.0);
+
+            var result = bank.totalInterestPaid();
+
+            Assert.AreEqual(.2, result, DOUBLE_DELTA);
+        }
+
+        [TestMethod]
         public void CheckingAccount() {
             Bank bank = new Bank();
             Account checkingAccount = new Account(Account.CHECKING);
